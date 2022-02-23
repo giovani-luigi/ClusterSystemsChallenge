@@ -65,7 +65,6 @@
     </Compile>
     <Compile Include="DataAccess\IMenuItemRepository.cs" />
     <Compile Include="DataAccess\MenuItemInMemoryRepository.cs" />
-    <Compile Include="DataAccess\MenuItemTestRepository.cs" />
     <Compile Include="Exceptions\DataAccessException.cs" />
     <Compile Include="Model\MenuItem.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
