@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using ClusterMenu.DataAccess;
+using ClusterMenu.ViewModel;
 
 namespace ClusterMenu.View {
 
@@ -8,6 +10,7 @@ namespace ClusterMenu.View {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            DataContext = new MainViewModel(App.Current.Services.GetInstance<IMenuItemRepository>());
         }
     }
 }
