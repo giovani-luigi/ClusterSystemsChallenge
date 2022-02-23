@@ -20,7 +20,7 @@ namespace ClusterMenu.DataAccess {
             _idCounter = 0;
         }
 
-        public MenuItemInMemoryRepository(IDictionary<int, MenuItem> items) {
+        protected MenuItemInMemoryRepository(IDictionary<int, MenuItem> items) {
             _menuItems = new Dictionary<int, MenuItem>(items);
             _idCounter = items.Keys.Max();
         }
