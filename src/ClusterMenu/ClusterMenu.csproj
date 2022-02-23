@@ -67,6 +67,7 @@
     <Compile Include="DataAccess\MenuItemInMemoryRepository.cs" />
     <Compile Include="Exceptions\DataAccessException.cs" />
     <Compile Include="Model\MenuItem.cs" />
+    <Compile Include="Utils\Command.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
