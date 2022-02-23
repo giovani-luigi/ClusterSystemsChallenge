@@ -33,7 +33,7 @@ namespace ClusterMenu.DataAccess {
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="DataAccessException"></exception>
-        public void Insert(MenuItem item) {
+        public int Insert(MenuItem item) {
             
             // validate model
             if (item == null) 
@@ -45,6 +45,7 @@ namespace ClusterMenu.DataAccess {
             // insert into memory
             item.IdMenuItem = GetNextId();
             _menuItems.Add(item.IdMenuItem, item);
+            return item.IdMenuItem;
         }
 
         /// <inheritdoc />

@@ -12,7 +12,13 @@ namespace ClusterMenu.DataAccess {
         /// <summary>
         /// Insert an item.
         /// </summary>
-        void Insert(MenuItem item);
+        /// <remarks>
+        /// Notice that the item gets its ID updated by this method upon successful insertion
+        /// </remarks>
+        /// <returns>
+        /// Returns the ID of the inserted item
+        /// </returns>
+        int Insert(MenuItem item);
 
         /// <summary>
         /// Update an item
