@@ -11,5 +11,14 @@
 
         public MenuItem() {
         }
+
+        public static MenuItem NewItem(string name, decimal price, bool active = true) {
+            return new MenuItem() {
+                Name = name,
+                Price = price,
+                Active = active,
+            };
+        }
+
     }
 }
