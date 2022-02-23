@@ -67,6 +67,7 @@
     <Compile Include="DataAccess\MenuItemInMemoryRepository.cs" />
     <Compile Include="Exceptions\DataAccessException.cs" />
     <Compile Include="Model\MenuItem.cs" />
+    <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -99,7 +100,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Utils\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
