@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterMenu", "ClusterMenu\ClusterMenu.csproj", "{2A353F26-9644-4E76-8C02-2DD1771BEDE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterMenu.Tests", "ClusterMenu.Tests\ClusterMenu.Tests.csproj", "{04EC890F-AD9E-489F-AEDE-ACAC54D94B0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A353F26-9644-4E76-8C02-2DD1771BEDE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A353F26-9644-4E76-8C02-2DD1771BEDE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A353F26-9644-4E76-8C02-2DD1771BEDE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A353F26-9644-4E76-8C02-2DD1771BEDE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04EC890F-AD9E-489F-AEDE-ACAC54D94B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04EC890F-AD9E-489F-AEDE-ACAC54D94B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04EC890F-AD9E-489F-AEDE-ACAC54D94B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04EC890F-AD9E-489F-AEDE-ACAC54D94B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FDEC7B58-D7B4-4AF3-A52D-C0A0678C910C}
+	EndGlobalSection
+EndGlobal
