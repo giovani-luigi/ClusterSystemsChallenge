@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using ClusterMenu.Exceptions;
 using ClusterMenu.Model;
@@ -17,6 +18,11 @@ namespace ClusterMenu.DataAccess {
         public MenuItemInMemoryRepository() {
             _menuItems = new Dictionary<int, MenuItem>();
             _idCounter = 0;
+        }
+
+        public MenuItemInMemoryRepository(IDictionary<int, MenuItem> items) {
+            _menuItems = new Dictionary<int, MenuItem>(items);
+            _idCounter = items.Keys.Max();
         }
 
         /// <inheritdoc />
