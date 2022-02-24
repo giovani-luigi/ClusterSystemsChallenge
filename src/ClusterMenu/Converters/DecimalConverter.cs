@@ -17,7 +17,11 @@ namespace ClusterMenu.Converters {
             if (value is null) return decimal.Zero;
             var str = value.ToString();
             if (string.IsNullOrWhiteSpace(str)) return decimal.Zero;
-            return decimal.Parse(str, CultureInfo.CurrentCulture);
+            try {
+                return decimal.Parse(str, CultureInfo.CurrentCulture);
+            } catch (Exception e) {
+                return decimal.Zero;
+            }
         }
 
     }

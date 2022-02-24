@@ -18,7 +18,11 @@ namespace ClusterMenu.Converters {
         /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is string s) {
-                return int.Parse(s);
+                try {
+                    return int.Parse(s);
+                } catch (Exception e) {
+                    return 0;
+                }
             }
             return 0;
         }

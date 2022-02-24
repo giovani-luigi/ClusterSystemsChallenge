@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using ClusterMenu.Exceptions;
 using ClusterMenu.Model;
 using ClusterMenu.Services;
 using ClusterMenu.Utils;
-using ClusterMenu.Validators;
-using FluentValidation;
 
 namespace ClusterMenu.ViewModel {
     public class AddViewModel : ViewModelBase {
@@ -44,6 +41,9 @@ namespace ClusterMenu.ViewModel {
 
         #region Command Handlers
 
+        /// <summary>
+        /// Handler invoked for Command: Add new menu item
+        /// </summary>
         private void OnCommandAdd(object o) {
 
             var item = Item;
@@ -67,6 +67,9 @@ namespace ClusterMenu.ViewModel {
             base.RequestViewToClose(true);
         }
 
+        /// <summary>
+        /// Handler invoked for Command: Cancel add new item, and close
+        /// </summary>
         private void OnCommandCancel() {
             base.RequestViewToClose(false);
         }

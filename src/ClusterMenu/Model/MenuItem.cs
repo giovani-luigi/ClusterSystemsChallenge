@@ -14,33 +14,25 @@ namespace ClusterMenu.Model {
         [JsonProperty("idMenuItem")]
         public int IdMenuItem {
             get => _idMenuItem;
-            set {
-                Set(ref _idMenuItem, value);
-            }
+            set => Set(ref _idMenuItem, value);
         }
 
         [JsonProperty("name")]
         public string Name {
             get => _name;
-            set {
-                Set(ref _name, value);
-            }
+            set => Set(ref _name, value);
         }
 
         [JsonProperty("price")]
         public decimal Price {
             get => _price;
-            set {
-                Set(ref _price, value);
-            }
+            set => Set(ref _price, value);
         }
 
         [JsonProperty("active")]
         public bool Active {
             get => _active;
-            set {
-                Set(ref _active, value);
-            }
+            set => Set(ref _active, value);
         }
 
         public MenuItem() {

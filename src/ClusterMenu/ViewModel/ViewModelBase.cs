@@ -8,6 +8,9 @@ namespace ClusterMenu.ViewModel {
     /// </summary>
     public class ViewModelBase : ObservableObject {
 
+        /// <summary>
+        /// Raised when the view model notifies the View to close itself.
+        /// </summary>
         public event EventHandler<bool?> ViewCloseRequested;
 
         /// <summary>
@@ -19,6 +22,9 @@ namespace ClusterMenu.ViewModel {
             Logger = logger ?? new ConsoleLogger();
         }
 
+        /// <summary>
+        /// Request the View to close
+        /// </summary>
         protected virtual void RequestViewToClose(bool? dialogResult) {
             ViewCloseRequested?.Invoke(this, dialogResult);
         }

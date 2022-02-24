@@ -8,7 +8,6 @@ using ClusterMenu.Exceptions;
 using ClusterMenu.Model;
 using ClusterMenu.Services;
 using ClusterMenu.Utils;
-using ClusterMenu.Validators;
 using ClusterMenu.View;
 
 namespace ClusterMenu.ViewModel {
@@ -46,14 +45,6 @@ namespace ClusterMenu.ViewModel {
             CommandExit = new Command(OnCommandExit);
         }
 
-        private void ListItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            if (SelectedItem != null) {
-                if (e.NewItems.Cast<MenuItem>().All(x => x.IdMenuItem != SelectedItem.IdMenuItem)) {
-                    ClearSelection();
-                }
-            }
-        }
-        
         #region Bound Properties
 
         public MenuItem SelectedItem {
@@ -74,22 +65,22 @@ namespace ClusterMenu.ViewModel {
             }
         }
 
-        public int ItemEditorId {
+        public int ItemEditorId { // property extracted from SelectedItem so it can be edited without affecting actual model
             get => _itemEditorId;
             set => Set(ref _itemEditorId, value);
         }
 
-        public string ItemEditorName {
+        public string ItemEditorName { // property extracted from SelectedItem so it can be edited without affecting actual model
             get => _itemEditorName;
             set => Set(ref _itemEditorName, value);
         }
 
-        public decimal ItemEditorPrice {
+        public decimal ItemEditorPrice { // property extracted from SelectedItem so it can be edited without affecting actual model
             get => _itemEditorPrice;
             set => Set(ref _itemEditorPrice, value);
         }
 
-        public bool ItemEditorActive {
+        public bool ItemEditorActive { // property extracted from SelectedItem so it can be edited without affecting actual model
             get => _itemEditorActive;
             set => Set(ref _itemEditorActive, value);
         }
@@ -198,11 +189,18 @@ namespace ClusterMenu.ViewModel {
 
         #endregion
 
+        /// <summary>
+        /// Clear the text of the search box and reload ViewModel list
+        /// </summary>
         private void ClearSearch() {
             SearchText = "";
             ReloadList();
         }
 
+        /// <summary>
+        /// Populate the ViewModel observable list with the appropriate contents, based on ViewModel state
+        /// </summary>
+        /// <param name="searchText"></param>
         private void ReloadList(string searchText = null) {
             if (string.IsNullOrWhiteSpace(searchText)) {
                 ListItems = new ObservableCollection<MenuItem>(_menuService.GetAllItems());
@@ -214,5 +212,15 @@ namespace ClusterMenu.ViewModel {
         private void ClearSelection() {
             SelectedItem = null;
         }
+        
+        private void ListItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (SelectedItem != null) {
+                //When the items list is reload, we need to de-select the currently selected item when it is not available in the new list.
+                if (e.NewItems.Cast<MenuItem>().All(x => x.IdMenuItem != SelectedItem.IdMenuItem)) {
+                    ClearSelection();
+                }
+            }
+        }
+
     }
 }

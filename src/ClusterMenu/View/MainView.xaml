@@ -53,7 +53,7 @@
                    FontFamily="Arial" FontWeight="Bold" FontSize="20" Foreground="Gray">Search:</Label>
             <TextBox Margin="0 15 10 15" Grid.Column="2"  
                      HorizontalAlignment="Stretch" 
-                     TextAlignment="Right"
+                     TextAlignment="Left"
                      FontFamily="Arial" FontSize="20"
                      VerticalContentAlignment="Center"
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -67,6 +67,8 @@
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+
+                <!-- LEFT PANEL -->
                 <ListBox Grid.Column="0" SelectionMode="Single" ItemsSource="{Binding ListItems}" SelectedItem="{Binding SelectedItem}"
                          Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
@@ -87,7 +89,10 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                
                 <GridSplitter Grid.Column="1" Background="DimGray" Width="5" HorizontalAlignment="Stretch" />
+
+                <!-- RIGHT PANEL -->
                 <Grid Grid.Column="2" Margin="10" MaxWidth="500" MaxHeight="400">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
