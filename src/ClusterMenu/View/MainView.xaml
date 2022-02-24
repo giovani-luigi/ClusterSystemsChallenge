@@ -1,14 +1,99 @@
-﻿<Window x:Class="ClusterMenu.View.MainWindow"
+﻿<Window x:Class="ClusterMenu.View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClusterMenu"
+        xmlns:vm="clr-namespace:ClusterMenu.ViewModel"
+        xmlns:properties="clr-namespace:ClusterMenu.Properties"
         mc:Ignorable="d"
         Title="Cluster Systems - Menu" 
-        Height="450" Width="800" 
-        WindowStartupLocation="CenterScreen">
+        Height="500" Width="740" 
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource ColorBackground}">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Header -->
+        <Grid Grid.Row="0"  Height="80" Background="{StaticResource ColorBackgroundLighter}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="../Media/logo.png"
+                   Margin="10" Width="200" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left"></Image>
+            <Label Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"
+                   FontFamily="Arial" FontWeight="Bold" FontSize="20" Foreground="Gray">Search:</Label>
+            <TextBox Margin="0 15 10 15" Grid.Column="2"  
+                     HorizontalAlignment="Stretch" 
+                     TextAlignment="Right"
+                     FontFamily="Arial" FontSize="20"
+                     VerticalContentAlignment="Center"></TextBox>
+        </Grid>
         
+        <!-- Main Content -->
+        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DimGray">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ListBox Grid.Column="0" ItemsSource="{Binding MenuItems}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0 2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                                <TextBlock Grid.Column="2" Text="{Binding Price}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <GridSplitter Grid.Column="1" Background="DimGray" Width="5" HorizontalAlignment="Stretch" />
+                <Grid Grid.Column="2">
+                    <TextBlock Grid.Column="0" FontSize="55" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">Right side</TextBlock>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- Footer -->
+        <Grid Grid.Row="2" Background="{StaticResource ColorBackgroundLighter}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Button Add -->
+            <Button Grid.Column="0" Margin="5" FontSize="16" Command="{Binding CommandAdd}">ADD</Button>
+
+            <!-- Button Update -->
+            <Button Grid.Column="1" Margin="5" FontSize="16" Command="{Binding CommandUpdate}">UPDATE</Button>
+
+            <!-- Button Delete -->
+            <Button Grid.Column="2" Margin="5" FontSize="16" Command="{Binding CommandDelete}">DELETE</Button>
+
+            <!-- Button ShowJson -->
+            <Button Grid.Column="3" Margin="5" FontSize="16" Command="{Binding CommandShowJson}">SHOW JSON</Button>
+
+            <!-- Button Exit -->
+            <Button Grid.Column="4" Margin="5" FontSize="16">EXIT</Button>
+
+        </Grid>
     </Grid>
 </Window>
