@@ -10,7 +10,7 @@ namespace ClusterMenu.View {
     public partial class JsonView : Window {
         public JsonView() {
             InitializeComponent();
-            DataContext = new JsonViewModel(App.Current.Services.GetInstance<IMenuService>());
+            DataContext = new JsonViewModel(this, App.Current.Services.GetInstance<IMenuService>());
         }
     }
 }

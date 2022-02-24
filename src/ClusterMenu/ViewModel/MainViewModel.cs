@@ -19,7 +19,7 @@ namespace ClusterMenu.ViewModel {
             MenuItems = new ObservableCollection<MenuItem>();
         }
         
-        public MainViewModel(IMenuService menuService) {
+        public MainViewModel(Window view, IMenuService menuService) {
             _menuService = menuService;
             
             // retrieve all menu items
@@ -58,20 +58,7 @@ namespace ClusterMenu.ViewModel {
         #region CommandHandlers
 
         private void OnCommandAdd(object obj) {
-
-            var item = MenuItem.NewItem("Giovani", 12m);
-            
-            Logger.LogInfo($"Adding menu item to the system. Name={item.Name}, Price={item.Price}");
-
-            try {
-                _menuService.Insert(item);
-            } catch (ApplicationException ex) {
-                Logger.LogError("Application exception", ex);
-                MessageBox.Show(ex.Message);
-            } catch (Exception e) {
-                Logger.LogError("Error", e);
-                MessageBox.Show("Error inserting into the database.");
-            }
+            new AddView().ShowDialog();
         }
 
         private void OnCommandShowJson(object obj) {

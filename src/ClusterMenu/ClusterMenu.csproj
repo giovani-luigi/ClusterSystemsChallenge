@@ -92,6 +92,7 @@
     <Compile Include="Utils\ConsoleLogger.cs" />
     <Compile Include="Utils\ILogger.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
+    <Compile Include="ViewModel\AddViewModel.cs" />
     <Compile Include="ViewModel\JsonViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
