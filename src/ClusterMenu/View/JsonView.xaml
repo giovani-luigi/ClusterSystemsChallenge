@@ -10,7 +10,9 @@
         Background="{StaticResource ColorBackground}"
         >
     <Grid>
-        <TextBlock Background="{StaticResource ColorBackgroundLighter}" Foreground="white" Margin="10" Padding="10" Text="{Binding Json}">
-        </TextBlock>
+        <TextBox Background="{StaticResource ColorBackgroundLighter}" 
+                   Foreground="white" Margin="10" Padding="10" Text="{Binding Json}"
+                   VerticalScrollBarVisibility="Auto" >
+        </TextBox>
     </Grid>
 </Window>

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using ClusterMenu.Exceptions;
 using ClusterMenu.Model;
 using ClusterMenu.Services;
 using ClusterMenu.Utils;
 using ClusterMenu.Validators;
+using FluentValidation;
 
 namespace ClusterMenu.ViewModel {
     public class AddViewModel : ViewModelBase {
@@ -18,7 +21,7 @@ namespace ClusterMenu.ViewModel {
             
             Item = MenuItem.NewItem("", 0M);
 
-            CommandAdd = new Command(OnCommandAdd, x => IsValid());
+            CommandAdd = new Command(OnCommandAdd);
             CommandCancel = new Command(OnCommandCancel);
         }
         
@@ -48,12 +51,17 @@ namespace ClusterMenu.ViewModel {
 
             try {
                 _menuService.Insert(item);
+            } catch (ModelValidationException ex) {
+                MessageBox.Show(ex.Message);
+                return;
             } catch (ApplicationException ex) {
                 Logger.LogError("Application exception", ex);
                 MessageBox.Show(ex.Message);
+                return;
             } catch (Exception e) {
                 Logger.LogError("Error", e);
                 MessageBox.Show("Error inserting into the database.");
+                return;
             }
 
             base.RequestViewToClose(true);
@@ -65,9 +73,5 @@ namespace ClusterMenu.ViewModel {
 
         #endregion
         
-        private bool IsValid() {
-            var validation = new MenuItemValidator().Validate(Item);
-            return validation.IsValid;
-        }
     }
 }

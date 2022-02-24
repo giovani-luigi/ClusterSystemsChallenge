@@ -85,7 +85,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\StringToDecimalConverter.cs" />
+    <Compile Include="Converters\DecimalConverter.cs" />
+    <Compile Include="Converters\IdConverter.cs" />
     <Compile Include="DataAccess\IMenuItemRepository.cs" />
     <Compile Include="DataAccess\MenuItemInMemoryRepository.cs" />
     <Compile Include="Exceptions\DataAccessException.cs" />

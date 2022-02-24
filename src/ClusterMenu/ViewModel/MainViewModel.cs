@@ -4,9 +4,11 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using ClusterMenu.Exceptions;
 using ClusterMenu.Model;
 using ClusterMenu.Services;
 using ClusterMenu.Utils;
+using ClusterMenu.Validators;
 using ClusterMenu.View;
 
 namespace ClusterMenu.ViewModel {
@@ -142,23 +144,26 @@ namespace ClusterMenu.ViewModel {
                 Name = ItemEditorName,
                 Price = ItemEditorPrice,
             };
-
+            
             Logger.LogInfo($"User is updating the menu item with ID={itemToUpdate.IdMenuItem}");
 
             try {
                 _menuService.Update(itemToUpdate);
-                ReloadList();
+            } catch (ModelValidationException ex) {
+                MessageBox.Show(ex.Message);
+                return;
             } catch (ApplicationException ex) {
                 Logger.LogError("Application exception", ex);
                 MessageBox.Show(ex.Message);
+                return;
             } catch (Exception e) {
                 Logger.LogError("Error", e);
                 MessageBox.Show("Error inserting into the database.");
+                return;
             }
 
             // clear search criteria
             ClearSearch();
-
         }
 
         private void OnCommandDelete(object obj) {
@@ -169,13 +174,15 @@ namespace ClusterMenu.ViewModel {
             Logger.LogInfo($"User is deleting the menu item with Name={item.Name}");
 
             try {
-                _menuService.Update(item);
+                _menuService.DeleteById(item.IdMenuItem);
             } catch (ApplicationException ex) {
                 Logger.LogError("Application exception", ex);
                 MessageBox.Show(ex.Message);
+                return;
             } catch (Exception e) {
                 Logger.LogError("Error", e);
                 MessageBox.Show("Error inserting into the database.");
+                return;
             }
             
             // clear search criteria

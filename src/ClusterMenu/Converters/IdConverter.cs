@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace ClusterMenu.Converters {
-    
-    public class StringToDecimalConverter : IValueConverter {
+    public class IdConverter : IValueConverter {
         
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            if (value is null) return decimal.Zero;
-            var str = value.ToString();
-            if (string.IsNullOrWhiteSpace(str)) return decimal.Zero;
-            return decimal.Parse(str, CultureInfo.CurrentCulture);
+            if (value is int i) {
+                if (i < 0) return string.Empty;
+                return value.ToString();
+            }
+            return string.Empty;
         }
 
         /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            if (value is null) return string.Empty;
-            return value.ToString();
+            if (value is string s) {
+                return int.Parse(s);
+            }
+            return 0;
         }
 
     }
