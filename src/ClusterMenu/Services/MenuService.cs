@@ -34,7 +34,7 @@ namespace ClusterMenu.Services {
 
         /// <inheritdoc />
         public string GetMenuAsJson() {
-            return JsonConvert.SerializeObject(_cache);
+            return JsonConvert.SerializeObject(_cache, Formatting.Indented);
         }
 
         /// <inheritdoc />
