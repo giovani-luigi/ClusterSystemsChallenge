@@ -10,7 +10,7 @@ namespace ClusterMenu.View {
     public partial class MainView : Window {
         public MainView() {
             InitializeComponent();
-            DataContext = new MainViewModel(this, App.Current.Services.GetInstance<IMenuService>());
+            DataContext = new MainViewModel(App.Current.Services.GetInstance<IMenuService>());
         }
     }
 }

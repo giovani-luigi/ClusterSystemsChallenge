@@ -10,7 +10,12 @@ namespace ClusterMenu.View {
     public partial class AddView : Window {
         public AddView() {
             InitializeComponent();
-            DataContext = new AddViewModel(this, App.Current.Services.GetInstance<IMenuService>());
+            var viewModel = new AddViewModel(App.Current.Services.GetInstance<IMenuService>());
+            DataContext = viewModel;
+            viewModel.ViewCloseRequested += (sender, dialogResult) => {
+                DialogResult = dialogResult;
+                Close();
+            };
         }
     }
 }

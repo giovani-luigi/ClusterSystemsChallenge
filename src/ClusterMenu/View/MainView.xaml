@@ -11,6 +11,15 @@
         Height="500" Width="740" 
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource ColorBackground}">
+    <Window.Resources>
+        <Style x:Key="WhiteLabel" TargetType="Label">
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -45,15 +54,17 @@
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ListBox Grid.Column="0" ItemsSource="{Binding ListItems}">
+                <ListBox Grid.Column="0" SelectionMode="Single" ItemsSource="{Binding ListItems}" SelectedItem="{Binding SelectedItem}"
+                         Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0 2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding IdMenuItem}" />
                                 <TextBlock Grid.Column="1" Text="{Binding Name}" />
                                 <TextBlock Grid.Column="2" Text="{Binding Price}" />
                             </Grid>
@@ -61,8 +72,37 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <GridSplitter Grid.Column="1" Background="DimGray" Width="5" HorizontalAlignment="Stretch" />
-                <Grid Grid.Column="2">
-                    <TextBlock Grid.Column="0" FontSize="55" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap">Right side</TextBlock>
+                <Grid Grid.Column="2" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="5*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- ID -->
+                    <Label Grid.Row="0" Grid.Column="0" Margin="10" Style="{StaticResource WhiteLabel}">ID</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="10" Text="{Binding ItemEditorId, Mode=OneWay}" VerticalContentAlignment="Center"
+                             IsReadOnly="True" IsReadOnlyCaretVisible="False"></TextBox>
+
+                    <!-- Name -->
+                    <Label Grid.Row="1" Grid.Column="0" Margin="10" Style="{StaticResource WhiteLabel}">Name</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="10" Text="{Binding ItemEditorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"></TextBox>
+
+                    <!-- Price -->
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10" Style="{StaticResource WhiteLabel}">Price (USD)</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="10" Text="{Binding ItemEditorPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"></TextBox>
+
+                    <!-- Active -->
+                    <Label Grid.Row="3" Grid.Column="0" Margin="10" Style="{StaticResource WhiteLabel}">Available</Label>
+                    <CheckBox Grid.Row="3" Grid.Column="1" Margin="10" VerticalContentAlignment="Center" FontSize="14" Foreground="White"
+                        IsChecked="{Binding ItemEditorActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Is Available</CheckBox>
+
                 </Grid>
             </Grid>
         </Border>

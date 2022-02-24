@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using ClusterMenu.Model;
 using ClusterMenu.Services;
 using ClusterMenu.Utils;
 using ClusterMenu.Validators;
-using ClusterMenu.View;
 
 namespace ClusterMenu.ViewModel {
     public class AddViewModel : ViewModelBase {
         
-        private readonly AddView _view;
         private readonly IMenuService _menuService;
 
         private MenuItem _item;
 
-        public AddViewModel(AddView view, IMenuService menuService) {
-            _view = view;
+        public AddViewModel(IMenuService menuService) {
             _menuService = menuService;
-
+            
             Item = MenuItem.NewItem("", 0M);
 
             CommandAdd = new Command(OnCommandAdd, x => IsValid());
@@ -60,13 +56,11 @@ namespace ClusterMenu.ViewModel {
                 MessageBox.Show("Error inserting into the database.");
             }
 
-            _view.DialogResult = true;
-            _view.Close();
+            base.RequestViewToClose(true);
         }
 
         private void OnCommandCancel() {
-            _view.DialogResult = false;
-            _view.Close();
+            base.RequestViewToClose(false);
         }
 
         #endregion

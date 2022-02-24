@@ -8,7 +8,7 @@ namespace ClusterMenu.ViewModel {
         private readonly IMenuService _menuService;
         private string _json;
         
-        public JsonViewModel(Window view, IMenuService menuService) {
+        public JsonViewModel(IMenuService menuService) {
             _menuService = menuService;
 
             _json = "Loading...";

@@ -1,4 +1,5 @@
-﻿using ClusterMenu.Utils;
+﻿using System;
+using ClusterMenu.Utils;
 
 namespace ClusterMenu.ViewModel {
     /// <summary>
@@ -7,6 +8,8 @@ namespace ClusterMenu.ViewModel {
     /// </summary>
     public class ViewModelBase : ObservableObject {
 
+        public event EventHandler<bool?> ViewCloseRequested;
+
         /// <summary>
         /// Provides loggind mechanisms to the ViewModel
         /// </summary>
@@ -14,6 +17,10 @@ namespace ClusterMenu.ViewModel {
 
         public ViewModelBase() {
             Logger = App.Current.Services.GetInstance<ILogger>();
+        }
+
+        protected virtual void RequestViewToClose(bool? dialogResult) {
+            ViewCloseRequested?.Invoke(this, dialogResult);
         }
     }
 }

@@ -62,5 +62,5 @@
             <Button Grid.Column="1" Margin="10 0 0 0" Command="{Binding CommandCancel}">Cancel</Button>
         </Grid>
 
-</Grid>
+    </Grid>
 </Window>

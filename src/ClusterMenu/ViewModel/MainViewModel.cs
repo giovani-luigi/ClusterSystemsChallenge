@@ -15,16 +15,21 @@ namespace ClusterMenu.ViewModel {
         
         private readonly IMenuService _menuService;
 
+        // backing field for observable properties
         private MenuItem _selectedItem;
         private string _searchText;
         private ObservableCollection<MenuItem> _listItems;
+        private string _itemEditorName;
+        private decimal _itemEditorPrice;
+        private bool _itemEditorActive;
+        private int _itemEditorId;
 
         public MainViewModel() {
             // this is for design-time only
             _listItems = new ObservableCollection<MenuItem>();
         }
         
-        public MainViewModel(Window view, IMenuService menuService) {
+        public MainViewModel(IMenuService menuService) {
             _menuService = menuService;
             
             // retrieve all menu items
@@ -51,7 +56,40 @@ namespace ClusterMenu.ViewModel {
 
         public MenuItem SelectedItem {
             get => _selectedItem;
-            set => Set(ref _selectedItem, value);
+            set {
+                Set(ref _selectedItem, value);
+                if (value is null) {
+                    ItemEditorId = -1;
+                    ItemEditorName = string.Empty;
+                    ItemEditorPrice = decimal.Zero;
+                    ItemEditorActive = false;
+                    return;
+                }
+                ItemEditorId = value.IdMenuItem;
+                ItemEditorName = value.Name;
+                ItemEditorPrice = value.Price;
+                ItemEditorActive = value.Active;
+            }
+        }
+
+        public int ItemEditorId {
+            get => _itemEditorId;
+            set => Set(ref _itemEditorId, value);
+        }
+
+        public string ItemEditorName {
+            get => _itemEditorName;
+            set => Set(ref _itemEditorName, value);
+        }
+
+        public decimal ItemEditorPrice {
+            get => _itemEditorPrice;
+            set => Set(ref _itemEditorPrice, value);
+        }
+
+        public bool ItemEditorActive {
+            get => _itemEditorActive;
+            set => Set(ref _itemEditorActive, value);
         }
 
         public ObservableCollection<MenuItem> ListItems {
@@ -88,7 +126,7 @@ namespace ClusterMenu.ViewModel {
         private void OnCommandAdd(object obj) {
             var result = new AddView().ShowDialog();
             if (result.HasValue && result.Value) {
-                ReloadList();
+                ClearSearch();
             }
         }
         
@@ -97,14 +135,19 @@ namespace ClusterMenu.ViewModel {
         }
 
         private void OnCommandUpdate(object obj) {
+            
+            var itemToUpdate = new MenuItem {
+                IdMenuItem = ItemEditorId,
+                Active = ItemEditorActive,
+                Name = ItemEditorName,
+                Price = ItemEditorPrice,
+            };
 
-            var item = SelectedItem;
-            if (item == null) return;
-
-            Logger.LogInfo($"User is updating the menu item with ID={item.IdMenuItem}");
+            Logger.LogInfo($"User is updating the menu item with ID={itemToUpdate.IdMenuItem}");
 
             try {
-                _menuService.Update(item);
+                _menuService.Update(itemToUpdate);
+                ReloadList();
             } catch (ApplicationException ex) {
                 Logger.LogError("Application exception", ex);
                 MessageBox.Show(ex.Message);
@@ -112,6 +155,10 @@ namespace ClusterMenu.ViewModel {
                 Logger.LogError("Error", e);
                 MessageBox.Show("Error inserting into the database.");
             }
+
+            // clear search criteria
+            ClearSearch();
+
         }
 
         private void OnCommandDelete(object obj) {
@@ -130,6 +177,9 @@ namespace ClusterMenu.ViewModel {
                 Logger.LogError("Error", e);
                 MessageBox.Show("Error inserting into the database.");
             }
+            
+            // clear search criteria
+            ClearSearch();
         }
 
         private void OnCommandExit() {
@@ -141,6 +191,11 @@ namespace ClusterMenu.ViewModel {
 
         #endregion
 
+        private void ClearSearch() {
+            SearchText = "";
+            ReloadList();
+        }
+
         private void ReloadList(string searchText = null) {
             if (string.IsNullOrWhiteSpace(searchText)) {
                 ListItems = new ObservableCollection<MenuItem>(_menuService.GetAllItems());
@@ -150,7 +205,7 @@ namespace ClusterMenu.ViewModel {
         }
         
         private void ClearSelection() {
-            SelectedItem = MenuItem.NewItem("", decimal.Zero);
+            SelectedItem = null;
         }
     }
 }
