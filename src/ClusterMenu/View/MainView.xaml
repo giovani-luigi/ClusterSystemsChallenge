@@ -11,9 +11,6 @@
         Height="500" Width="740" 
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource ColorBackground}">
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -48,7 +45,7 @@
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ListBox Grid.Column="0" ItemsSource="{Binding MenuItems}">
+                <ListBox Grid.Column="0" ItemsSource="{Binding ListItems}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0 2">

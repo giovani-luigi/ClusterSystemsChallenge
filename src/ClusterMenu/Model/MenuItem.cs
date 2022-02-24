@@ -1,13 +1,47 @@
-﻿namespace ClusterMenu.Model {
-    public class MenuItem {
+﻿using ClusterMenu.Utils;
+using Newtonsoft.Json;
 
-        public int IdMenuItem { get; set; } = -1;
+namespace ClusterMenu.Model {
 
-        public string Name { get; set; }
+    [JsonObject(MemberSerialization.OptIn)]
+    public class MenuItem : ObservableObject {
 
-        public decimal Price { get; set; }
+        private int _idMenuItem = -1;
+        private string _name;
+        private decimal _price;
+        private bool _active;
 
-        public bool Active { get; set; }
+        [JsonProperty("idMenuItem")]
+        public int IdMenuItem {
+            get => _idMenuItem;
+            set {
+                Set(ref _idMenuItem, value);
+            }
+        }
+
+        [JsonProperty("name")]
+        public string Name {
+            get => _name;
+            set {
+                Set(ref _name, value);
+            }
+        }
+
+        [JsonProperty("price")]
+        public decimal Price {
+            get => _price;
+            set {
+                Set(ref _price, value);
+            }
+        }
+
+        [JsonProperty("active")]
+        public bool Active {
+            get => _active;
+            set {
+                Set(ref _active, value);
+            }
+        }
 
         public MenuItem() {
         }

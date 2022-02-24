@@ -21,15 +21,15 @@ namespace ClusterMenu.ViewModel {
 
         public MainViewModel() {
             // this is for design-time only
-            ListItems = new ObservableCollection<MenuItem>();
+            _listItems = new ObservableCollection<MenuItem>();
         }
         
         public MainViewModel(Window view, IMenuService menuService) {
             _menuService = menuService;
             
             // retrieve all menu items
-            ListItems = _menuService.GetAllItems();
-            ListItems.CollectionChanged += ListItemsOnCollectionChanged;
+            _listItems = new ObservableCollection<MenuItem>(_menuService.GetAllItems());
+            _listItems.CollectionChanged += ListItemsOnCollectionChanged;
 
             // create commands
             CommandAdd = new Command(OnCommandAdd);
@@ -56,16 +56,14 @@ namespace ClusterMenu.ViewModel {
 
         public ObservableCollection<MenuItem> ListItems {
             get => _listItems;
-            private set {
-                Set(ref _listItems, value);
-            }
+            set => Set(ref _listItems, value);
         }
 
         public string SearchText {
             get => _searchText;
             set {
                 Set(ref _searchText, value);
-                FilterItems(_searchText);
+                ReloadList(_searchText);
             }
         }
         
@@ -88,9 +86,12 @@ namespace ClusterMenu.ViewModel {
         #region CommandHandlers
 
         private void OnCommandAdd(object obj) {
-            new AddView().ShowDialog();
+            var result = new AddView().ShowDialog();
+            if (result.HasValue && result.Value) {
+                ReloadList();
+            }
         }
-
+        
         private void OnCommandShowJson(object obj) {
             new JsonView().ShowDialog();
         }
@@ -140,17 +141,12 @@ namespace ClusterMenu.ViewModel {
 
         #endregion
 
-        private void FilterItems(string searchText) {
-
-            ListItems = new ObservableCollection<MenuItem>(_menuService.GetAllItems().Where(x => x.Name.Contains(searchText)));
-
-            /*
-            // repopulate the list of items with only matching items
-            ListItems.Clear();
-            foreach (var item in _menuService.GetAllItems().Where(x => x.Name.Contains(searchText))) {
-                ListItems.Add(item); // this needs to be optimized. Create an observable collection that has AddRange()
+        private void ReloadList(string searchText = null) {
+            if (string.IsNullOrWhiteSpace(searchText)) {
+                ListItems = new ObservableCollection<MenuItem>(_menuService.GetAllItems());
+                return;
             }
-            */
+            ListItems = new ObservableCollection<MenuItem>(_menuService.GetAllItems().Where(x => x.Name.Contains(searchText)));
         }
         
         private void ClearSelection() {

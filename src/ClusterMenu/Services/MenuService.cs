@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 using ClusterMenu.DataAccess;
 using ClusterMenu.Exceptions;
@@ -19,22 +19,19 @@ namespace ClusterMenu.Services {
     public class MenuService : IMenuService {
         
         private readonly IMenuItemRepository _menuItemRepository;
-
-        private readonly ObservableCollection<MenuItem> _cache;
-
+        
         public MenuService(IMenuItemRepository menuItemRepository) {
             _menuItemRepository = menuItemRepository;
-            _cache = new ObservableCollection<MenuItem>(_menuItemRepository.GetAll());
         }
 
         /// <inheritdoc />
-        public ObservableCollection<MenuItem> GetAllItems() {
-            return _cache;
+        public IEnumerable<MenuItem> GetAllItems() {
+            return _menuItemRepository.GetAll();
         }
 
         /// <inheritdoc />
         public string GetMenuAsJson() {
-            return JsonConvert.SerializeObject(_cache, Formatting.Indented);
+            return JsonConvert.SerializeObject(_menuItemRepository.GetAll(), Formatting.Indented);
         }
 
         /// <inheritdoc />
@@ -48,7 +45,6 @@ namespace ClusterMenu.Services {
             }
 
             int index = _menuItemRepository.Insert(item);
-            _cache.Add(item); // we add in cache after repository insertion was successful (i.e. skip if throws)
             return index;
         }
 
@@ -62,30 +58,14 @@ namespace ClusterMenu.Services {
                 throw new ModelValidationException(validation.Errors.First().ErrorMessage);
             }
 
-            // find the first item that matches ID, remove and replace with new one
-            for (int i = 0; i < _cache.Count; i++) {
-                if (_cache[i].IdMenuItem == item.IdMenuItem) {
-                    // remove and add the item in the colletion to trigger its change notification
-                    _cache.RemoveAt(i);
-                    _cache.Insert(i, item);
-                    return;
-                }
-            }
+            _menuItemRepository.Update(item);
         }
 
         /// <inheritdoc />
         public void DeleteById(int itemId) {
 
-            // first remove from repository layer
+            // remove from repository layer
             _menuItemRepository.DeleteById(itemId);
-
-            // now on the cached, find the first item that matches ID and remove
-            for (int i = 0; i < _cache.Count; i++) {
-                if (_cache[i].IdMenuItem == itemId) {
-                    _cache.RemoveAt(i);
-                    break;
-                }
-            }
         }
     }
 }

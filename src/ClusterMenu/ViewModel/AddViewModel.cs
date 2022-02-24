@@ -5,6 +5,7 @@ using System.Windows.Input;
 using ClusterMenu.Model;
 using ClusterMenu.Services;
 using ClusterMenu.Utils;
+using ClusterMenu.Validators;
 using ClusterMenu.View;
 
 namespace ClusterMenu.ViewModel {
@@ -59,17 +60,20 @@ namespace ClusterMenu.ViewModel {
                 MessageBox.Show("Error inserting into the database.");
             }
 
+            _view.DialogResult = true;
             _view.Close();
         }
 
         private void OnCommandCancel() {
+            _view.DialogResult = false;
             _view.Close();
         }
 
         #endregion
         
         private bool IsValid() {
-            return true;
+            var validation = new MenuItemValidator().Validate(Item);
+            return validation.IsValid;
         }
     }
 }

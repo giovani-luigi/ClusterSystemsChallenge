@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using ClusterMenu.Model;
 
 namespace ClusterMenu.Services {
@@ -12,7 +12,7 @@ namespace ClusterMenu.Services {
         /// <summary>
         /// Get all the items in the database
         /// </summary>
-        ObservableCollection<MenuItem> GetAllItems();
+        IEnumerable<MenuItem> GetAllItems();
 
         /// <summary>
         /// Get all menu items from the database as a JSON file
