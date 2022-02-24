@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ClusterMenu.DataAccess;
+using ClusterMenu.Services;
 using ClusterMenu.Utils;
 using SimpleInjector;
 
@@ -30,9 +31,11 @@ namespace ClusterMenu {
 
             container.Register<ILogger, ConsoleLogger>(Lifestyle.Singleton);
 
-            // configure repository
             // for in-memory repository, we need it to be singleton, for persisted storage use transient instead
-            container.Register<IMenuItemRepository, MenuItemInMemoryRepository>(Lifestyle.Singleton); 
+            container.Register<IMenuItemRepository, MenuItemInMemoryRepository>(Lifestyle.Singleton);
+            
+            // since the service is caching data, we need to make it a singleton
+            container.Register<IMenuService, MenuService>(Lifestyle.Singleton);
             
             return container;
         }

@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using ClusterMenu.Utils;
+﻿using ClusterMenu.Utils;
 
 namespace ClusterMenu.ViewModel {
     /// <summary>
@@ -14,7 +13,7 @@ namespace ClusterMenu.ViewModel {
         protected ILogger Logger { get; set; }
 
         public ViewModelBase() {
-            //Logger = App.Current.Services.GetService();
+            Logger = App.Current.Services.GetInstance<ILogger>();
         }
     }
 }

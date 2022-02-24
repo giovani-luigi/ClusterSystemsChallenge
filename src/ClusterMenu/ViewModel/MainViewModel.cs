@@ -2,25 +2,27 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using ClusterMenu.DataAccess;
 using ClusterMenu.Model;
+using ClusterMenu.Services;
 using ClusterMenu.Utils;
+using ClusterMenu.View;
 
 namespace ClusterMenu.ViewModel {
 
     public class MainViewModel : ViewModelBase {
         
-        private readonly IMenuItemRepository _menuItemsRepository;
+        private readonly IMenuService _menuService;
 
         public MainViewModel() {
+            // this is for design-time only
             MenuItems = new ObservableCollection<MenuItem>();
         }
         
-        public MainViewModel(IMenuItemRepository menuItemsRepository) {
-            _menuItemsRepository = menuItemsRepository;
+        public MainViewModel(IMenuService menuService) {
+            _menuService = menuService;
             
             // retrieve all menu items
-            MenuItems = new ObservableCollection<MenuItem>(_menuItemsRepository.GetAll());
+            MenuItems = _menuService.GetAllItems();
 
             // create commands
             CommandAdd = new Command(OnCommandAdd);
@@ -52,27 +54,60 @@ namespace ClusterMenu.ViewModel {
         #region CommandHandlers
 
         private void OnCommandAdd(object obj) {
+
             var item = MenuItem.NewItem("Giovani", 12m);
+            
+            Logger.LogInfo($"Adding menu item to the system. Name={item.Name}, Price={item.Price}");
+
             try {
-                _menuItemsRepository.Insert(item);
+                _menuService.Insert(item);
+            } catch (ApplicationException ex) {
+                Logger.LogError("Application exception", ex);
+                MessageBox.Show(ex.Message);
             } catch (Exception e) {
                 Logger.LogError("Error", e);
                 MessageBox.Show("Error inserting into the database.");
-                return;
             }
-            MenuItems.Add(item);
         }
 
         private void OnCommandShowJson(object obj) {
-
+            new JsonView().ShowDialog();
         }
 
         private void OnCommandUpdate(object obj) {
-            
+
+            var item = SelectedItem;
+            if (item == null) return;
+
+            Logger.LogInfo($"User is updating the menu item with ID={item.IdMenuItem}");
+
+            try {
+                _menuService.Update(item);
+            } catch (ApplicationException ex) {
+                Logger.LogError("Application exception", ex);
+                MessageBox.Show(ex.Message);
+            } catch (Exception e) {
+                Logger.LogError("Error", e);
+                MessageBox.Show("Error inserting into the database.");
+            }
         }
 
         private void OnCommandDelete(object obj) {
             
+            var item = SelectedItem;
+            if (item == null) return;
+            
+            Logger.LogInfo($"User is deleting the menu item with Name={item.Name}");
+
+            try {
+                _menuService.Update(item);
+            } catch (ApplicationException ex) {
+                Logger.LogError("Application exception", ex);
+                MessageBox.Show(ex.Message);
+            } catch (Exception e) {
+                Logger.LogError("Error", e);
+                MessageBox.Show("Error inserting into the database.");
+            }
         }
 
         #endregion

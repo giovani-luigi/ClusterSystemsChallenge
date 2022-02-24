@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 
 namespace ClusterMenu.View {
+
     /// <summary>
     /// Interaction logic for AddView.xaml
     /// </summary>
