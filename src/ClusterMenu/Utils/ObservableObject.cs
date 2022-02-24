@@ -35,7 +35,6 @@ namespace ClusterMenu.Utils {
         public bool Set<T>(ref T backingField, T newValue, Func<T, T, bool> validator = null, [CallerMemberName] string propertyName = null) {
 
             // parameters validation
-            if (backingField == null) throw new ArgumentNullException(nameof(backingField));
             if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
 
             // if the new value is the same as previous value, ignore
