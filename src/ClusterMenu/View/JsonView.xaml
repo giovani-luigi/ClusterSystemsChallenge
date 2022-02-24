@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClusterMenu.View"
+        xmlns:vm="clr-namespace:ClusterMenu.ViewModel"
         mc:Ignorable="d"
         Title="JsonView" Height="400" Width="400"
-        Background="{StaticResource ColorBackground}">
+        Background="{StaticResource ColorBackground}"
+        >
     <Grid>
-        <TextBlock Background="{StaticResource ColorBackgroundLighter}" Foreground="white" Margin="10" Padding="10">
-            JSON HERE
+        <TextBlock Background="{StaticResource ColorBackgroundLighter}" Foreground="white" Margin="10" Padding="10" Text="{Binding Json}">
         </TextBlock>
     </Grid>
 </Window>

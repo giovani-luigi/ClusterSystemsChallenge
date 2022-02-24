@@ -12,6 +12,7 @@ namespace ClusterMenu.ViewModel {
     public class MainViewModel : ViewModelBase {
         
         private readonly IMenuService _menuService;
+        private MenuItem _selectedItem;
 
         public MainViewModel() {
             // this is for design-time only
@@ -33,7 +34,10 @@ namespace ClusterMenu.ViewModel {
         
         #region Properties
 
-        public MenuItem SelectedItem { get; set; }
+        public MenuItem SelectedItem {
+            get => _selectedItem;
+            set => Set(ref _selectedItem, value);
+        }
 
         public ObservableCollection<MenuItem> MenuItems { get; private set; }
 

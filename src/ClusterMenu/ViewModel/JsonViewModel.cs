@@ -5,23 +5,29 @@ namespace ClusterMenu.ViewModel {
     public class JsonViewModel : ViewModelBase {
         
         private readonly IMenuService _menuService;
-
+        private string _json;
+        
         public JsonViewModel(IMenuService menuService) {
             _menuService = menuService;
 
-            Task.Run(() => {
+            _json = "Loading...";
+            
+            Task.Run(async () => {
                 
-                string jsonText = _menuService.GetMenuAsJson();
+                string jsonString = _menuService.GetMenuAsJson();
 
-                Task.Delay(500); // just simulate some loading time...
+                await Task.Delay(1000); // just simulate some loading time...
 
-                App.Current.Dispatcher.InvokeAsync(() => { // dispatch to UI thread
-                    Json = jsonText;
-                });
+                App.Current.Dispatcher.Invoke(() => Json = jsonString);
             });
         }
 
-        public string Json { get; set; } = "Loading...";
+        public string Json {
+            get => _json;
+            set {
+                Set(ref _json, value);
+            }
+        } 
 
     }
 }
