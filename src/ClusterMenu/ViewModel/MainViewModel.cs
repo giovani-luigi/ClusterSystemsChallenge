@@ -24,12 +24,12 @@ namespace ClusterMenu.ViewModel {
         private bool _itemEditorActive;
         private int _itemEditorId;
 
-        public MainViewModel() {
+        public MainViewModel() : base(null) {
             // this is for design-time only
             _listItems = new ObservableCollection<MenuItem>();
         }
         
-        public MainViewModel(IMenuService menuService) {
+        public MainViewModel(IMenuService menuService, ILogger logger = null) : base(logger) {
             _menuService = menuService;
             
             // retrieve all menu items

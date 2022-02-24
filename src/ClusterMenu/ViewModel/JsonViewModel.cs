@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using ClusterMenu.Services;
+using ClusterMenu.Utils;
 
 namespace ClusterMenu.ViewModel {
     public class JsonViewModel : ViewModelBase {
@@ -8,7 +9,7 @@ namespace ClusterMenu.ViewModel {
         private readonly IMenuService _menuService;
         private string _json;
         
-        public JsonViewModel(IMenuService menuService) {
+        public JsonViewModel(IMenuService menuService, ILogger logger = null) : base(logger) {
             _menuService = menuService;
 
             _json = "Loading...";

@@ -15,8 +15,8 @@ namespace ClusterMenu.ViewModel {
         /// </summary>
         protected ILogger Logger { get; set; }
 
-        public ViewModelBase() {
-            Logger = App.Current.Services.GetInstance<ILogger>();
+        public ViewModelBase(ILogger logger) {
+            Logger = logger ?? new ConsoleLogger();
         }
 
         protected virtual void RequestViewToClose(bool? dialogResult) {

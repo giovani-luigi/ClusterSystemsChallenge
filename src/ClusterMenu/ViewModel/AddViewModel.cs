@@ -13,7 +13,7 @@ namespace ClusterMenu.ViewModel {
 
         private MenuItem _item;
 
-        public AddViewModel(IMenuService menuService) {
+        public AddViewModel(IMenuService menuService, ILogger logger = null) : base(logger) {
             _menuService = menuService;
             
             Item = MenuItem.NewItem("", 0M);
