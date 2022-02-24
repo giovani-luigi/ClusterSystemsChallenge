@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.10.3.6\lib\netstandard2.0\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -85,6 +88,7 @@
     <Compile Include="DataAccess\IMenuItemRepository.cs" />
     <Compile Include="DataAccess\MenuItemInMemoryRepository.cs" />
     <Compile Include="Exceptions\DataAccessException.cs" />
+    <Compile Include="Exceptions\ModelValidationException.cs" />
     <Compile Include="Model\MenuItem.cs" />
     <Compile Include="Services\IMenuService.cs" />
     <Compile Include="Services\MenuService.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="Utils\ConsoleLogger.cs" />
     <Compile Include="Utils\ILogger.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
+    <Compile Include="Validators\MenuItemValidator.cs" />
     <Compile Include="ViewModel\AddViewModel.cs" />
     <Compile Include="ViewModel\JsonViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -140,5 +145,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

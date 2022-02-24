@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using ClusterMenu.DataAccess;
+using ClusterMenu.Exceptions;
 using ClusterMenu.Model;
+using ClusterMenu.Validators;
 using Newtonsoft.Json;
 
 namespace ClusterMenu.Services {
 
     /// <summary>
-    /// Implements a service layer for the Menu
+    /// Implements a service layer for the Menu.
     /// </summary>
     /// <remarks>
-    /// This layer mediates repository access, allowing an in-memory replica to be
-    /// obtained as ObservableCollection and also provides other useful methods, that
-    /// implement features not available directly from the repository.
+    /// This layer mediates repository access, providing validation and other features
+    /// not available directly from the repository layer.
     /// </remarks>
     public class MenuService : IMenuService {
         
@@ -39,6 +41,12 @@ namespace ClusterMenu.Services {
         public int Insert(MenuItem item) {
             if (item == null) throw new ArgumentNullException(nameof(item));
 
+            // validate model
+            var validation = new MenuItemValidator().Validate(item);
+            if (!validation.IsValid) {
+                throw new ModelValidationException(validation.Errors.First().ErrorMessage);
+            }
+
             int index = _menuItemRepository.Insert(item);
             _cache.Add(item); // we add in cache after repository insertion was successful (i.e. skip if throws)
             return index;
@@ -47,6 +55,12 @@ namespace ClusterMenu.Services {
         /// <inheritdoc />
         public void Update(MenuItem item) {
             if (item == null) throw new ArgumentNullException(nameof(item));
+
+            // validate model
+            var validation = new MenuItemValidator().Validate(item);
+            if (!validation.IsValid) {
+                throw new ModelValidationException(validation.Errors.First().ErrorMessage);
+            }
 
             // find the first item that matches ID, remove and replace with new one
             for (int i = 0; i < _cache.Count; i++) {
